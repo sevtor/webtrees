@@ -22,7 +22,7 @@ namespace Fisharebest\Webtrees\Report;
 use DomainException;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Date;
-use Fisharebest\Webtrees\DB;
+//use Fisharebest\Webtrees\DB; // webtrees 2.2.x
 use Fisharebest\Webtrees\Elements\UnknownElement;
 use Fisharebest\Webtrees\Factories\MarkdownFactory;
 use Fisharebest\Webtrees\Family;
@@ -36,6 +36,7 @@ use Fisharebest\Webtrees\Note;
 use Fisharebest\Webtrees\Place;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Tree;
+use Illuminate\Database\Capsule\Manager as DB; // webtrees 2.1.x
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Query\JoinClause;
@@ -1144,11 +1145,6 @@ class ReportParserGenerate extends ReportParserBase
                     $value = strtr($value, [MarkdownFactory::BREAK => ' ']);
                 }
 
-                if (isset($attrs['lcfirst'])) {
-                    $value = lcfirst($value);
-                    $value = str_replace(["Å","Ä","Ö"], ["å","ä","ö"], $value);
-                }
-
                 if (!empty($attrs['truncate'])) {
                     $value = strip_tags($value);
                     if ((int) $attrs['truncate'] > 0) {
@@ -1396,9 +1392,6 @@ class ReportParserGenerate extends ReportParserBase
             if ($cut == 0) {
                 $var = "";
             }
-        }
-        if (isset($attrs['lcfirst'])) {
-            $var = lcfirst($var);
         }
         $this->current_element->addText($var);
         $this->text = $var; // Used for title/description
@@ -1780,9 +1773,6 @@ class ReportParserGenerate extends ReportParserBase
         } elseif (preg_match('/^I18N::translateContext\(\'(.+)\', *\'(.+)\'\)$/', $value, $match)) {
             $value = I18N::translateContext($match[1], $match[2]);
         }
-        if (isset($attrs['lcfirst'])) { // set 1st char to lower case
-            $value = lcfirst($value);
-        }
 
         // Arithmetic functions
         if (preg_match("/(\d+)\s*([-+*\/])\s*(\d+)/", $value, $match)) {
@@ -2054,7 +2044,7 @@ class ReportParserGenerate extends ReportParserBase
 
         if ($file === '@FILE') {
             $match = [];
-            if (preg_match("/\d OBJE @(.+)@/", $this->gedrec, $match)) {
+            if (preg_match("/1 OBJE @(.+)@/", $this->gedrec, $match)) {
                 $mediaobject = Registry::mediaFactory()->make($match[1], $this->tree);
                 $media_file  = $mediaobject->firstImageFile();
 
