@@ -128,7 +128,6 @@ class ReportBaseTextbox extends ReportBaseElement
         $this->reseth    = $reseth;
         $this->abs_position = $abs_position;
         $this->top_position = $top_position;
-        error_log("\ncreateTB base(top,w,h,nl,reseth): ".var_export([$top,$width,$height,$newline,$reseth],true)."\n\n",3,"pdf.log");
     }
 
     /**

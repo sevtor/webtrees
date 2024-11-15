@@ -121,11 +121,6 @@ class ReportHtmlTextbox extends ReportBaseTextbox
         $this->elements = $newelements;
         unset($footnote_element, $lastelement, $newelements);
 
-        if ($cE>0)
-            error_log("\nhtmlTB start: [cE,element[1]]=".
-                var_export([$cE,$this->elements[0]],true)."\n",3,"html_tb.log");
-
-
         $cP = 0; // Class Padding
 
         // Used with line breaks and cell height calculation within this box only
@@ -308,8 +303,6 @@ class ReportHtmlTextbox extends ReportBaseTextbox
             $this->top = $first_Y;  //- $cH;
             $cH = 0;
         }
-        error_log("\nhtml end1: [top,top_position,cYT,getY(),first_Y,newline]=".
-            var_export([$this->top,$this->top_position,$cYT,$renderer->getY(),$first_Y,$this->newline],true)."\n",3,"html_tb.log");
          // New line and some clean up
         if (!$this->newline) {
             $renderer->setXy($cX + $this->width, $this->top);
@@ -319,8 +312,6 @@ class ReportHtmlTextbox extends ReportBaseTextbox
             $renderer->setXy(0, $first_Y + $cH + $cP * 2);
             $renderer->lastCellHeight = 0;
         }
-        error_log("html end2: [top,reseth,cYT,cY,first_Y,newline]=".
-            var_export([$this->top,$this->reseth,$cYT,$renderer->getY(),$first_Y,$this->newline],true)."\n",3,"html_tb.log");
         // This will make images in textboxes to ignore images in previous textboxes
         // Without this trick the $lastpicbottom in the previos textbox will be used in ReportHtmlImage
         $renderer->pageN++;

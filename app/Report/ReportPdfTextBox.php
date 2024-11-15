@@ -131,22 +131,15 @@ class ReportPdfTextBox extends ReportBaseTextbox
 
         $cE = count($this->elements);
         if ($cE>0)
-            error_log("\npdfTB start: [cE,element[1]]=".
-                var_export([$cE,$this->elements[0]],true)."\n",3,"pdf_tb.log");
 
         // If current position (top)
         $align_Y = false;
         $curr_P = $renderer->tcpdf->getPage();
-        //$first_Y = $renderer->tcpdf->GetY();
-        error_log("\npdfTB1: [top,curr_P,abs_position,top_position,GetY()]=".
-            var_export([$this->top,$curr_P,$this->abs_position,$this->top_position,$renderer->tcpdf->GetY()],true)."\n",3,"pdf_tb.log");
         if ($this->abs_position) {
             $this->top_position = 0;
             $align_Y = true;
             if ($this->top != ReportBaseElement::CURRENT_POSITION) {
                 $renderer->tcpdf->setY($this->top);
-            //} else {
-            //    $renderer->tcpdf->setY($first_Y);
             }
             $cY = $renderer->tcpdf->GetY();
         } else {
@@ -158,8 +151,6 @@ class ReportPdfTextBox extends ReportBaseTextbox
             $cY = $renderer->tcpdf->GetY();
         }
         $start_Y = $renderer->tcpdf->GetY();
-        error_log("\npdfTB2: [top,curr_P,top_position,start_Y]=".
-            var_export([$this->top,$curr_P,$this->top_position,$start_Y],true)."\n",3,"pdf_tb.log");
 
         // Check the width if set to page wide OR set by xml to larger then page width (margin)
         if ($this->width === 0.0 || $this->width > $renderer->getRemainingWidthPDF()) {

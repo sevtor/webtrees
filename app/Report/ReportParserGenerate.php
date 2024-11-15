@@ -864,7 +864,6 @@ class ReportParserGenerate extends ReportParserBase
             }
         }
 
-        error_log("\nRPG:867 [abs_position,top_position,top]=".var_export([$abs_position,$top_position,$top],true)."\n",3,"rpg.log");
         // boolean After this box is finished rendering, should the next section of text start immediately after the this box or should it start on a new line under this box. 0 = no new line, 1 = force new line. Default is 0
 
         $newline = false;
