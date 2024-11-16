@@ -130,7 +130,6 @@ class ReportPdfTextBox extends ReportBaseTextbox
         }
 
         $cE = count($this->elements);
-        if ($cE > 0)
 
         // If current position (top)
         $align_Y = false;
