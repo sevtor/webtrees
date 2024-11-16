@@ -99,7 +99,7 @@ class ReportHtmlText extends ReportBaseText
     {
         $ct = substr_count($this->text, "\n");
         if (substr($this->text, -1) == "\n") {
-            $ct -=1;
+            $ct -= 1;
         }
         if ($ct > 0) {
             $ct += 1;
