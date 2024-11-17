@@ -303,7 +303,7 @@ class ReportHtmlTextbox extends ReportBaseTextbox
             $this->top = $first_Y;  //- $cH;
             $cH = 0;
         }
-         // New line and some clean up
+        // New line and some clean up
         if (!$this->newline) {
             $renderer->setXy($cX + $this->width, $this->top);
             $renderer->lastCellHeight = $cH;
