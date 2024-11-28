@@ -1747,6 +1747,11 @@ class ReportParserGenerate extends ReportParserBase
             $gmatch = [];
             if (preg_match("/\d $match[1] (.+)/", $this->gedrec, $gmatch)) {
                 $value = str_replace('@', '', trim($gmatch[1]));
+                if (!empty($attrs['truncate'])) {
+                    if ($attrs['truncate'] === "Y") {
+                        $value = substr($value, -4);
+                    }
+                }
             }
         } elseif (preg_match("/@\\$(\w+)/", $value, $match)) {
             if ($match[1] == "dump" && $this->vars['dval']['id'] > 0) {
