@@ -58,7 +58,7 @@ class MarriageType extends AbstractElement
         return [
             ''                     => '',
             self::VALUE_CIVIL      => I18N::translate('Civil marriage'),
-            self::VALUE_COMMON_LAW => I18N::translate('Common-law marriage'),
+            self::VALUE_COMMON_LAW => I18N::translate('Common law marriage'),
             self::VALUE_PARTNERS   => I18N::translate('Registered partnership'),
             self::VALUE_RELIGIOUS  => I18N::translate('Religious marriage'),
         ];
