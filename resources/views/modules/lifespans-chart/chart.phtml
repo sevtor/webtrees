@@ -35,7 +35,7 @@ use Fisharebest\Webtrees\Gedcom;
     </a>
 
     <div class="wt-lifespans-summary collapse position-absolute" id="<?= e($lifespan->id) ?>" style="<?= $dir === 'ltr' ? 'left' : 'right' ?>:<?= (min($lifespan->birth_year, $end_year - 50) - $start_year) * 7 ?>px; top:<?= ($lifespan->row + 1) * 1.5 ?>rem; width:350px;">
-        <a class="wt-lifespans-summary-link" href="<?= e($lifespan->individual->url()) ?>">
+        <a class="wt-lifespans-summary-link" href="<?= $lifespan->individual->url() ?>">
             <?= $lifespan->individual->fullName() ?>
         </a>
 
