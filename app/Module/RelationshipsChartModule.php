@@ -68,17 +68,17 @@ class RelationshipsChartModule extends AbstractModule implements ModuleChartInte
     use ModuleChartTrait;
     use ModuleConfigTrait;
 
-    protected const ROUTE_URL = '/tree/{tree}/relationships-{ancestors}-{recursion}/{xref}{/xref2}';
+    protected const string ROUTE_URL = '/tree/{tree}/relationships-{ancestors}-{recursion}/{xref}{/xref2}';
 
     /** It would be more correct to use PHP_INT_MAX, but this isn't friendly in URLs */
-    public const UNLIMITED_RECURSION = 99;
+    public const int UNLIMITED_RECURSION = 99;
 
     /** By default new trees allow unlimited recursion */
-    public const DEFAULT_RECURSION = '99';
+    public const string DEFAULT_RECURSION = '99';
 
     /** By default new trees search for all relationships (not via ancestors) */
-    public const DEFAULT_ANCESTORS  = '0';
-    public const DEFAULT_PARAMETERS = [
+    public const string DEFAULT_ANCESTORS  = '0';
+    public const array  DEFAULT_PARAMETERS = [
         'ancestors' => self::DEFAULT_ANCESTORS,
         'recursion' => self::DEFAULT_RECURSION,
     ];
@@ -194,10 +194,17 @@ class RelationshipsChartModule extends AbstractModule implements ModuleChartInte
      */
     public function chartUrl(Individual $individual, array $parameters = []): string
     {
+        $tree           = $individual->tree();
+        $ancestors_only = (int) $tree->getPreference('RELATIONSHIP_ANCESTORS', static::DEFAULT_ANCESTORS);
+        $max_recursion  = (int) $tree->getPreference('RELATIONSHIP_RECURSION', static::DEFAULT_RECURSION);
+
+
         return route(static::class, [
-                'xref' => $individual->xref(),
-                'tree' => $individual->tree()->name(),
-            ] + $parameters + self::DEFAULT_PARAMETERS);
+            'xref'      => $individual->xref(),
+            'tree'      => $individual->tree()->name(),
+            'ancestors' => $ancestors_only,
+            'recursion' => $max_recursion,
+        ] + $parameters);
     }
 
     /**
